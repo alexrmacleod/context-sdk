@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import { z } from "zod";
 import { defineHttpTool, executeHttpTool } from "@ctxprotocol/sdk";
