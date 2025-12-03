@@ -1,70 +1,33 @@
-import { z } from "zod";
+/**
+ * @contextprotocol/client
+ *
+ * Official TypeScript Client for the Context Protocol.
+ * Discover and execute AI tools programmatically.
+ *
+ * @packageDocumentation
+ */
 
-export type ToolContext = {
-  /**
-   * Raw headers from the incoming request. Useful if contributors need to
-   * inspect authentication or tracing metadata.
-   */
-  headers?: Record<string, string | string[] | undefined>;
-};
+// Main client export
+export { ContextClient } from "./client.js";
 
-export type DefineHttpToolOptions<I extends z.ZodTypeAny, O extends z.ZodTypeAny> = {
-  name: string;
-  version?: string;
-  description?: string;
-  inputSchema: I;
-  outputSchema: O;
-  handler: (input: z.infer<I>, context: ToolContext) => Promise<z.infer<O>>;
-};
+// Resource exports
+export { Discovery } from "./resources/discovery.js";
+export { Tools } from "./resources/tools.js";
 
-export type HttpToolDefinition<I extends z.ZodTypeAny, O extends z.ZodTypeAny> = {
-  name: string;
-  version?: string;
-  description?: string;
-  inputSchema: I;
-  outputSchema: O;
-  handler: (input: z.infer<I>, context: ToolContext) => Promise<z.infer<O>>;
-};
+// Type exports for full autocomplete support
+export type {
+  ContextClientOptions,
+  Tool,
+  McpTool,
+  SearchResponse,
+  SearchOptions,
+  ExecuteOptions,
+  ExecutionResult,
+  ExecuteApiSuccessResponse,
+  ExecuteApiErrorResponse,
+  ExecuteApiResponse,
+  ContextErrorCode,
+} from "./types.js";
 
-export type ExecuteHttpToolOptions = {
-  headers?: Record<string, string | string[] | undefined>;
-};
-
-export type ContextResponse<T> = {
-  data: T;
-  meta: {
-    tool: string;
-    version?: string;
-    generatedAt: string;
-  };
-};
-
-export function defineHttpTool<I extends z.ZodTypeAny, O extends z.ZodTypeAny>(
-  options: DefineHttpToolOptions<I, O>
-): HttpToolDefinition<I, O> {
-  return options;
-}
-
-export async function executeHttpTool<I extends z.ZodTypeAny, O extends z.ZodTypeAny>(
-  tool: HttpToolDefinition<I, O>,
-  input: unknown,
-  options: ExecuteHttpToolOptions = {}
-): Promise<ContextResponse<z.infer<O>>> {
-  const parsedInput = tool.inputSchema.parse(input);
-
-  const data = await tool.handler(parsedInput, {
-    headers: options.headers,
-  });
-
-  const parsedOutput = tool.outputSchema.parse(data);
-
-  return {
-    data: parsedOutput,
-    meta: {
-      tool: tool.name,
-      version: tool.version,
-      generatedAt: new Date().toISOString(),
-    },
-  };
-}
-
+// Error export
+export { ContextError } from "./types.js";
