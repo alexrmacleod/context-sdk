@@ -12,7 +12,7 @@ Context Protocol is **npm for AI capabilities**. Just as you install packages to
 ## Why use Context?
 
 - **🔌 One Interface, Everything:** Stop integrating APIs one by one. Use a single SDK to access any tool in the marketplace.
-- **🧠 Zero-Ops:** We host the MCP servers. You just send the JSON and get the result.
+- **🧠 Zero-Ops:** We're a gateway to the best MCP tools. Just send the JSON and get the result.
 - **⚡️ Agentic Discovery:** Your Agent can search the marketplace at runtime to find tools it didn't know it needed.
 - **💸 Micro-Billing:** Pay only for what you use (e.g., $0.001/query). No monthly subscriptions for tools you rarely use.
 
